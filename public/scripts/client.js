@@ -1,33 +1,59 @@
 /**
- * This file provided by Facebook is for non-commercial testing and evaluation
- * purposes only. Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
  */
 
-var Comment = React.createClass({
-  rawMarkup: function() {
-    console.log(this.props);
-    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
-    return { __html: rawMarkup };
+var MainPanel = React.createClass({
+  getInitialState: function() {
+    return { is_logged_in: false };
   },
-
   render: function() {
     return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {this.props.author}
-        </h2>
-        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+      <div className="MainPanel">
+        <CommentBox url="/api/comments" pollInterval={2000} />
       </div>
     );
   }
 });
+
+// var MainPanel = React.createClass({
+//   getInitialState: function() {
+//     return { is_logged_in: false };
+//   },
+//   render: function() {
+//     return (
+//       <div className="MainPanel">
+//         <UserButton url="/login" pollInterval={1000}/>
+//         <CommentBox url="/api/comments" pollInterval={2000} />
+//       </div>
+//     );
+//   }
+// });
+
+// var UserButton = React.createClass(
+//   getInitialState: function() {
+//     return { value: "Login" };
+//   },
+//   getUserLoginUrl: function() {
+//     $.ajax({
+//       url: this.props.url,
+//       dataType: 'json',
+//       cache: false,
+//       success: function(data) {
+//         this.setState({data: data});
+//       }.bind(this),
+//       error: function(xhr, status, err) {
+//         console.error(this.props.url, status, err.toString());
+//       }.bind(this)
+//     });
+//   },
+//   render: function() {
+//     return (
+//        <div className="UserButton">
+//          <a href="{}">{this.state.value}</a>
+//        </div>
+//     );
+//   }
+// });
 
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
@@ -141,7 +167,26 @@ var CommentForm = React.createClass({
   }
 });
 
+var Comment = React.createClass({
+  rawMarkup: function() {
+    console.log(this.props);
+    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+    return { __html: rawMarkup };
+  },
+
+  render: function() {
+    return (
+      <div className="comment">
+        <h2 className="commentAuthor">
+          {this.props.author}
+        </h2>
+        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+      </div>
+    );
+  }
+});
+
 ReactDOM.render(
-  <CommentBox url="/api/comments" pollInterval={2000} />,
+  <MainPanel />,
   document.getElementById('content')
 );
