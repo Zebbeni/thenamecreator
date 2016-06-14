@@ -74,8 +74,13 @@ func handleComments(w http.ResponseWriter, r *http.Request) {
 
 func init() {
 	http.HandleFunc("/api/comments", handleComments)
-	// http.HandleLogin("/login", handleLogin)
+	http.HandleFunc("/signin", signin)
 	http.Handle("/", http.FileServer(http.Dir("./public")))
+}
+
+func signin(w http.ResponseWriter, r *http.Request) {
+	user := r.FormValue("idtoken")
+	fmt.Println(user)
 }
 
 // func handleLogin(w http.ResponseWriter, r *http.Request) {
