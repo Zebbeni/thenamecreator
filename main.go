@@ -9,11 +9,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"time"
 
-	"appengine"
-	"appengine/datastore"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
+	"golang.org/x/net/context"
 )
 
 type comment struct {
@@ -23,7 +25,7 @@ type comment struct {
 }
 
 // commentKey returns the key used for all guestbook entries.
-func commentKey(c appengine.Context) *datastore.Key {
+func commentKey(c context.Context) *datastore.Key {
 	// The string "default_guestbook" here could be varied to have multiple guestbooks.
 	return datastore.NewKey(c, "comment", "comment_thread", 0, nil)
 }
@@ -81,6 +83,15 @@ func init() {
 func signin(w http.ResponseWriter, r *http.Request) {
 	user := r.FormValue("idtoken")
 	fmt.Println(user)
+}
+
+func main() {
+	log.Printf("About to listen on 10443")
+	go http.ListenAndServe(":9999", http.RedirectHandler("https://127.0.0.1:10443/", 301))
+	err := http.ListenAndServeTLS(":10443", "cert.pem", "key.pem", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 // func handleLogin(w http.ResponseWriter, r *http.Request) {
