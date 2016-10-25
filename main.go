@@ -1,14 +1,23 @@
-package hello
+
+package main
 
 import (
-    "fmt"
-    "net/http"
+	"fmt"
+	"net/http"
 )
 
-func init() {
-    http.HandleFunc("/", handler)
+type comment struct {
+	ID     int64  `json:"id"`
+	Author string `json:"author"`
+	Text   string `json:"text"`
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprint(w, "Name Creator")
+func init() {
+	http.HandleFunc("/signin", signin)
+	http.Handle("/", http.FileServer(http.Dir("./public")))
+}
+
+func signin(w http.ResponseWriter, r *http.Request) {
+	user := r.FormValue("idtoken")
+	fmt.Println(user)
 }

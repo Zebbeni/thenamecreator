@@ -1,0 +1,10 @@
+indexes:
+- kind: comment
+  ancestor: no
+  properties:
+  - name: ID
+    direction: desc
+  - name: Author
+    direction: asc
+  - name: Text
+    direction: desc
