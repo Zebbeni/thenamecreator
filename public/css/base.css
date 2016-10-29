@@ -7,6 +7,28 @@ body {
   padding: 30px;
 }
 
+.LeftPanel, .MiddlePanel, .RightPanel {
+  position: absolute;
+  top: 0px;
+  height: 100%;
+}
+
+.MiddlePanel {
+  width: 60%;
+  margin-left: -30%;
+  left: 50%;
+}
+
+.RightPanel {
+  width: 20%;
+  right: 0px;
+}
+
+.LeftPanel {
+  width: 20%;
+  left: 0px;
+}
+
 a {
   color: #4183c4;
   text-decoration: none;

@@ -9,51 +9,96 @@ var MainPanel = React.createClass({
   render: function() {
     return (
       <div className="MainPanel">
-        <CommentBox url="/api/comments" pollInterval={2000} />
+        <MiddlePanel />
+        <LeftPanel />
+        <RightPanel />
       </div>
     );
   }
 });
 
-// var MainPanel = React.createClass({
-//   getInitialState: function() {
-//     return { is_logged_in: false };
-//   },
-//   render: function() {
-//     return (
-//       <div className="MainPanel">
-//         <UserButton url="/login" pollInterval={1000}/>
-//         <CommentBox url="/api/comments" pollInterval={2000} />
-//       </div>
-//     );
-//   }
-// });
+var LeftPanel = React.createClass({
+  getInitialState: function() {
+    return {};
+  },
+  render: function() {
+    return (
+      <div className="LeftPanel">
+      </div>
+    );
+  }
+});
 
-// var UserButton = React.createClass(
-//   getInitialState: function() {
-//     return { value: "Login" };
-//   },
-//   getUserLoginUrl: function() {
-//     $.ajax({
-//       url: this.props.url,
-//       dataType: 'json',
-//       cache: false,
-//       success: function(data) {
-//         this.setState({data: data});
-//       }.bind(this),
-//       error: function(xhr, status, err) {
-//         console.error(this.props.url, status, err.toString());
-//       }.bind(this)
-//     });
-//   },
-//   render: function() {
-//     return (
-//        <div className="UserButton">
-//          <a href="{}">{this.state.value}</a>
-//        </div>
-//     );
-//   }
-// });
+var MiddlePanel = React.createClass({
+  getInitialState: function() {
+    return {};
+  },
+  render: function() {
+    return (
+        <div className="MiddlePanel">
+          <CommentBox url="/api/comments" pollInterval={2000} />
+        </div>
+    );
+  }
+});
+
+var RightPanel = React.createClass({
+  getInitialState: function() {
+    return {};
+  },
+  render: function() {
+    return (
+        <div className="RightPanel">
+          <SignInButton />
+          <SignOutButton />
+        </div>
+    );
+  }
+});
+
+var SignInButton = React.createClass({
+  getInitialState: function() {
+    return {};
+  },
+  onSignIn: function(googleUser) {
+      var id_token = googleUser.getAuthResponse().id_token;
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/signin');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function() {
+        console.log('Signed in as: ' + xhr.responseText);
+        console.log("id_token:", id_token);
+      };
+      xhr.send('idtoken=' + id_token);
+  },
+  render: function() {
+    return (
+      <div is data-onsuccess={this.onSignIn} class="g-signin2" />
+    );
+  }
+});
+
+var SignOutButton = React.createClass({
+  getInitialState: function() {
+    return {};
+  },
+  signOut: function() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  },
+  render: function() {
+    return (
+        <a is onclick={this.signOut} href="#"></a>
+    );
+  }
+});
 
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
