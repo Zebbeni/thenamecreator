@@ -4,13 +4,47 @@ body {
   font-size: 15px;
   line-height: 1.7;
   margin: 0;
-  padding: 30px;
+}
+
+.MainPanel, .TopPanel, .LeftPanel, .MiddlePanel, .RightPanel, .LoginPanel {
+  position: absolute;
+}
+
+.MainPanel, .LeftPanel, .MiddlePanel, .RightPanel {
+  height: 100%;
+}
+
+.MainPanel {
+  width: 100%;
+}
+
+#content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+}
+
+.TopPanel {
+  width: 100%;
+  height: 50px;
+  left: 0px;
+  top: 0px;
 }
 
 .LeftPanel, .MiddlePanel, .RightPanel {
-  position: absolute;
-  top: 0px;
-  height: 100%;
+  top: 50px;
+}
+
+.LoginPanel {
+  top: 10px;
+  right: 10px;
+  width: 120px;
+  height: 36px;
+}
+
+#signout-text {
+  display: none;
 }
 
 .MiddlePanel {

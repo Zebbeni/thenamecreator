@@ -9,10 +9,70 @@ var MainPanel = React.createClass({
   render: function() {
     return (
       <div className="MainPanel">
+        <TopPanel />
         <MiddlePanel />
         <LeftPanel />
         <RightPanel />
       </div>
+    );
+  }
+});
+
+var TopPanel = React.createClass({
+  render: function() {
+    return (
+        <div className="TopPanel">
+          <LoginPanel />
+        </div>
+    );
+  }
+});
+
+var LoginPanel = React.createClass({
+  render: function() {
+    return (
+        <div className="LoginPanel">
+          <SignIn />
+        </div>
+    );
+  }
+});
+
+var SignIn = React.createClass({
+  onSignIn: function (googleUser) {
+    var id_token = googleUser.getAuthResponse().id_token;
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail());
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/signin');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function () {
+      console.log('Signed in as: ' + xhr.responseText);
+      console.log("id_token:", id_token);
+    };
+    xhr.send('idtoken=' + id_token);
+    $.getElementById("")
+  },
+  componentDidMount: function() {
+    $.getScript('https://apis.google.com/js/platform.js')
+        .done(() => {
+          gapi.signin2.render('g-signin2', {
+            'scope': 'https://www.googleapis.com/auth/plus.login',
+            'width': 200,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': this.onSignIn
+          });
+        });
+  },
+  render : function() {
+    return (
+        <div className="g-signin2" data-onsuccess={this.onSignIn}></div>
     );
   }
 });
@@ -49,53 +109,7 @@ var RightPanel = React.createClass({
   render: function() {
     return (
         <div className="RightPanel">
-          <SignInButton />
-          <SignOutButton />
         </div>
-    );
-  }
-});
-
-var SignInButton = React.createClass({
-  getInitialState: function() {
-    return {};
-  },
-  onSignIn: function(googleUser) {
-      var id_token = googleUser.getAuthResponse().id_token;
-      var profile = googleUser.getBasicProfile();
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      console.log('Name: ' + profile.getName());
-      console.log('Image URL: ' + profile.getImageUrl());
-      console.log('Email: ' + profile.getEmail());
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '/signin');
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onload = function() {
-        console.log('Signed in as: ' + xhr.responseText);
-        console.log("id_token:", id_token);
-      };
-      xhr.send('idtoken=' + id_token);
-  },
-  render: function() {
-    return (
-      <div is data-onsuccess={this.onSignIn} class="g-signin2" />
-    );
-  }
-});
-
-var SignOutButton = React.createClass({
-  getInitialState: function() {
-    return {};
-  },
-  signOut: function() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  },
-  render: function() {
-    return (
-        <a is onclick={this.signOut} href="#"></a>
     );
   }
 });
