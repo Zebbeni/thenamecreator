@@ -33,33 +33,86 @@ var LoginPanel = React.createClass({
     return (
         <div className="LoginPanel">
           <SignIn />
+          <SignOut />
         </div>
     );
   }
 });
 
+// var SignIn = React.createClass({
+//   getInitialState: function() {
+//     return {is_logged_in: false, username: undefined};
+//   },
+//   onSignIn: function (googleUser) {
+//     var id_token = googleUser.getAuthResponse().id_token;
+//     var profile = googleUser.getBasicProfile();
+//     // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+//     // console.log('Name: ' + profile.getName());
+//     // console.log('Image URL: ' + profile.getImageUrl());
+//     // console.log('Email: ' + profile.getEmail());
+//
+//     var xhr = new XMLHttpRequest();
+//     xhr.open('POST', '/signin');
+//     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//     var username = profile.getName();
+//     // this.setState({
+//     //   is_logged_in: true,
+//     //   username: username
+//     // });
+//     // console.log("name:" + profile.getName());
+//     xhr.onload = function () {
+//       // console.log('Signed in as: ' + xhr.responseText);
+//       // console.log("id_token:", id_token);
+//     };
+//     xhr.send('idtoken=' + id_token);
+//   },
+//   componentDidMount: function() {
+//     $.getScript('https://apis.google.com/js/platform.js')
+//         .done(() => {
+//           gapi.signin2.render('g-signin2', {
+//             'scope': 'https://www.googleapis.com/auth/plus.login',
+//             'width': 200,
+//             'height': 50,
+//             'longtitle': true,
+//             'theme': 'dark',
+//             'onsuccess': this.onSignIn
+//           });
+//         });
+//   },
+//   onSignOut: function() {
+//     this.setState({
+//       is_logged_in: false,
+//       username: undefined
+//     });
+//   },
+//   render: function() {
+//     return (
+//         <div className="g-signin2" data-onsuccess={this.onSignIn}></div>
+//     );
+//   }
+// });
+
 var SignIn = React.createClass({
+  getInitialState: function() {
+    return {is_logged_in: false, username: undefined};
+  },
   onSignIn: function (googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/signin');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    var profile = googleUser.getBasicProfile();
+    console.log('Given Name 1: ' + profile.getGivenName());
     xhr.onload = function () {
-      console.log('Signed in as: ' + xhr.responseText);
-      console.log("id_token:", id_token);
+      var profile = googleUser.getBasicProfile();
+      console.log('Given Name 2: ' + profile.getGivenName());
     };
     xhr.send('idtoken=' + id_token);
-    $.getElementById("")
   },
   componentDidMount: function() {
     $.getScript('https://apis.google.com/js/platform.js')
         .done(() => {
+          initSigninV2();
           gapi.signin2.render('g-signin2', {
             'scope': 'https://www.googleapis.com/auth/plus.login',
             'width': 200,
@@ -70,9 +123,23 @@ var SignIn = React.createClass({
           });
         });
   },
-  render : function() {
+  render: function() {
     return (
-        <div className="g-signin2" data-onsuccess={this.onSignIn}></div>
+        <div className="g-signin2" onClick={this.onSignIn}/>
+    );
+  }
+});
+
+var SignOut = React.createClass({
+  onSignOut: function() {
+    auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  },
+  render: function() {
+    return (
+        <a onClick={this.onSignOut}>Sign out</a>
     );
   }
 });
@@ -228,7 +295,7 @@ var CommentForm = React.createClass({
 
 var Comment = React.createClass({
   rawMarkup: function() {
-    console.log(this.props);
+    // console.log(this.props);
     var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return { __html: rawMarkup };
   },
