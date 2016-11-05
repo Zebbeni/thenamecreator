@@ -15,46 +15,6 @@ var MainPanel = React.createClass({
   }
 });
 
-// var MainPanel = React.createClass({
-//   getInitialState: function() {
-//     return { is_logged_in: false };
-//   },
-//   render: function() {
-//     return (
-//       <div className="MainPanel">
-//         <UserButton url="/login" pollInterval={1000}/>
-//         <CommentBox url="/api/comments" pollInterval={2000} />
-//       </div>
-//     );
-//   }
-// });
-
-// var UserButton = React.createClass(
-//   getInitialState: function() {
-//     return { value: "Login" };
-//   },
-//   getUserLoginUrl: function() {
-//     $.ajax({
-//       url: this.props.url,
-//       dataType: 'json',
-//       cache: false,
-//       success: function(data) {
-//         this.setState({data: data});
-//       }.bind(this),
-//       error: function(xhr, status, err) {
-//         console.error(this.props.url, status, err.toString());
-//       }.bind(this)
-//     });
-//   },
-//   render: function() {
-//     return (
-//        <div className="UserButton">
-//          <a href="{}">{this.state.value}</a>
-//        </div>
-//     );
-//   }
-// });
-
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
