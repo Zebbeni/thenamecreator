@@ -60,3 +60,73 @@ p, ul {
 ul {
   padding-left: 30px;
 }
+
+#signin-div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  display: none;
+}
+
+#signin-options {
+  position: absolute;
+  width: 200px;
+  height: 120px;
+  top: 100px;
+  left: 50%;
+  margin-left: -100px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.abcRioButton {
+  position: absolute;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.g-signin2 {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  margin-left: -30px;
+}
+
+.veil {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(230, 230, 230, 0.5);
+}
+
+#close-signin {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.close-button {
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  color: #4183c4;
+  background-color: transparent;
+  border: none;
+}
+
+.close-button:hover {
+  color: sienna;
+  cursor: pointer;
+}
+
+.close-button:active {
+  color: brown;
+}
+
+.close-button:focus {
+  outline: 0;
+}

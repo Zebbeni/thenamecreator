@@ -15,10 +15,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
   </head>
   <body>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a id="account-name" href="#" onclick="signOut();"></a>
-    <div id="content"></div
+    <a id="signin-a" href="#" onclick="showSignIn();">Sign In</a>
+    <a id="profile-a" href="#" onclick="showProfile();"></a>
+    <a id="signout-a" href="#" onclick="signOut();"></a>
+    <div id="content"></div>
     <script type="text/babel" src="scripts/client.js"></script>
     <script type="text/javascript" src="scripts/account.js"></script>
+    <div id="signin-div">
+      <div id="signin-veil" class="veil"></div>
+      <div id="signin-options">
+        <div id="close-signin">
+          <button class="close-button" type="button" onclick="closeSignInOptions();">✖</button>
+        </div>
+        <h4 style="text-align: center; padding-top: 10px">Welcome!</h4>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      </div>
+    </div>
   </body>
 </html>
