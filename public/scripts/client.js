@@ -9,13 +9,50 @@ var MainPanel = React.createClass({
   render: function() {
     return (
       <div className="MainPanel">
-        <CommentBox url="/api/comments" pollInterval={2000} />
+        <LeftPanel />
+        <RightPanel />
+        <MiddlePanel />
       </div>
     );
   }
 });
 
-var CommentBox = React.createClass({
+var LeftPanel = React.createClass({
+  render: function() {
+    return (
+        <div className="LeftPanel"></div>
+    );
+  }
+});
+
+var MiddlePanel = React.createClass({
+  render: function() {
+    return (
+        <div className="MiddlePanel">
+          <GeneratePanel url="/api/comments" pollInterval={2000} />
+          <RulesPanel />
+        </div>
+    );
+  }
+});
+
+var RightPanel = React.createClass({
+  render: function() {
+    return (
+        <div className="RightPanel"></div>
+    );
+  }
+});
+
+var RulesPanel = React.createClass({
+  render: function() {
+    return (
+        <div className="RulesPanel"></div>
+    );
+  }
+});
+
+var GeneratePanel = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
@@ -60,8 +97,8 @@ var CommentBox = React.createClass({
   },
   render: function() {
     return (
-      <div className="commentBox">
-        <h1>Comments</h1>
+      <div className="GeneratePanel">
+        <h1>Generate</h1>
         <CommentList data={this.state.data} />
         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
       </div>

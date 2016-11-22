@@ -18,7 +18,7 @@ var onSignIn = function(googleUser) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
         console.log('Signed in as: ' + xhr.responseText);
-        console.log("id_token:", id_token);
+        // console.log("id_token:", id_token);
     };
     xhr.send('idtoken=' + id_token);
     $('a#signin-a').text("");

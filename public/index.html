@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="google-signin-client_id" content="460702535554-5m5ht6d5dtjeh8mop7cufchnp31sac2n.apps.googleusercontent.com">
-    <title>React Tutorial</title>
+    <title>The Name Creator</title>
     <!-- Not present in the tutorial. Just for basic styling. -->
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/panels.css" />
@@ -15,9 +15,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
   </head>
   <body>
-    <a id="signin-a" href="#" onclick="showSignIn();">Sign In</a>
-    <a id="profile-a" href="#" onclick="showProfile();"></a>
-    <a id="signout-a" href="#" onclick="signOut();"></a>
+    <div id="profile-signin-div">
+      <a id="signin-a" href="#" onclick="showSignIn();">Sign In</a>
+      <a id="profile-a" href="#" onclick="showProfile();"></a>
+      <a id="signout-a" href="#" onclick="signOut();"></a>
+    </div>
     <div id="content"></div>
     <script type="text/babel" src="scripts/client.js"></script>
     <script type="text/javascript" src="scripts/account.js"></script>

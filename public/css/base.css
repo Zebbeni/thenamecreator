@@ -4,7 +4,6 @@ body {
   font-size: 15px;
   line-height: 1.7;
   margin: 0;
-  padding: 30px;
 }
 
 a {
@@ -89,7 +88,7 @@ ul {
 
 .g-signin2 {
   position: absolute;
-  top: 50px;
+  top: 55px;
   left: 50%;
   margin-left: -30px;
 }
@@ -129,4 +128,13 @@ ul {
 
 .close-button:focus {
   outline: 0;
+}
+
+#profile-signin-div {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding-top: 10px;
+  padding-right: 30px;
+  text-align: right;
 }
